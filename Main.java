@@ -4,17 +4,32 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * @author Muhamad Rifki Saputra
+ *         Tugas UTS Mata Kuliah Pemrograman Berbasis Objek
+ *         Syarat utama Nested IF, Array, Looping
+ *         Membuat Aplikasi Transaksi Agen Beras
+ *         input, output, processing data
+ */
+
 public class Main {
     public static void main(String[] args) throws IOException {
-        InputStreamReader Keyreader = new InputStreamReader(System.in);
-        BufferedReader input = new BufferedReader(Keyreader);
+        Transaction transaction = new Transaction();
+        transaction.startTransaction();
+        transaction.printReceipt();
+    }
+}
 
-        // Deklarasi variabel
-        int jumlah_data;
-        String nama_kasir;
-        String[] jenis_beras, kualitas;
-        int[] jumlah_kg;
-        double[] harga_per_kg, total_harga;
+class Transaction {
+    String nama_kasir;
+    String[] jenis_beras, kualitas;
+    int[] jumlah_kg;
+    double[] harga_per_kg, total_harga;
+    String tanggal;
+
+    public void startTransaction() throws IOException {
+        InputStreamReader keyReader = new InputStreamReader(System.in);
+        BufferedReader input = new BufferedReader(keyReader);
 
         System.out.println("=".repeat(43));
         System.out.println("   Selamat Datang di Aplikasi Si JaBer    ");
@@ -24,16 +39,17 @@ public class Main {
         System.out.print("Masukkan nama kasir : ");
         nama_kasir = input.readLine();
 
+        System.out.print("Masukkan tanggal pembelian : ");
+        tanggal = input.readLine();
+
         System.out.print("Masukkan jumlah data pembelian beras: ");
-        jumlah_data = Integer.parseInt(input.readLine());
+        int jumlah_data = Integer.parseInt(input.readLine());
 
         jenis_beras = new String[jumlah_data];
         kualitas = new String[jumlah_data];
         jumlah_kg = new int[jumlah_data];
         harga_per_kg = new double[jumlah_data];
         total_harga = new double[jumlah_data];
-
-        double totalPendapatan = 0;
 
         for (int i = 0; i < jumlah_data; i++) {
             System.out.println("\nData ke-" + (i + 1));
@@ -44,29 +60,41 @@ public class Main {
             System.out.print("Jumlah (kg): ");
             jumlah_kg[i] = Integer.parseInt(input.readLine());
 
-            // Tentukan harga berdasarkan jenis dan kualitas beras
+            // Determine harga berdasarkan jenis dan kualitas beras
             if (jenis_beras[i].equalsIgnoreCase("P")) {
+                jenis_beras[i] = "Premium";
                 if (kualitas[i].equalsIgnoreCase("B")) {
+                    kualitas[i] = "Baik";
                     harga_per_kg[i] = 12000;
                 } else if (kualitas[i].equalsIgnoreCase("S")) {
+                    kualitas[i] = "Sedang";
                     harga_per_kg[i] = 10000;
                 } else {
+                    kualitas[i] = "Jelek";
                     harga_per_kg[i] = 8000;
                 }
             } else if (jenis_beras[i].equalsIgnoreCase("M")) {
+                jenis_beras[i] = "Medium";
                 if (kualitas[i].equalsIgnoreCase("B")) {
+                    kualitas[i] = "Baik";
                     harga_per_kg[i] = 10000;
                 } else if (kualitas[i].equalsIgnoreCase("S")) {
+                    kualitas[i] = "Sedang";
                     harga_per_kg[i] = 8000;
                 } else {
+                    kualitas[i] = "Jelek";
                     harga_per_kg[i] = 6000;
                 }
             } else if (jenis_beras[i].equalsIgnoreCase("B")) {
+                jenis_beras[i] = "Biasa";
                 if (kualitas[i].equalsIgnoreCase("B")) {
+                    kualitas[i] = "Baik";
                     harga_per_kg[i] = 8000;
                 } else if (kualitas[i].equalsIgnoreCase("S")) {
+                    kualitas[i] = "Sedang";
                     harga_per_kg[i] = 6000;
                 } else {
+                    kualitas[i] = "Jelek";
                     harga_per_kg[i] = 4000;
                 }
             } else {
@@ -75,20 +103,28 @@ public class Main {
             }
 
             total_harga[i] = harga_per_kg[i] * jumlah_kg[i];
-            totalPendapatan += total_harga[i];
         }
+    }
 
-        System.out.println("\n===== LAPORAN PENJUALAN BERAS =====");
-        for (int i = 0; i < jumlah_data; i++) {
-            System.out.println("Data ke-" + (i + 1));
-            System.out.println("Nama Kasir: " + nama_kasir);
-            System.out.println("Jenis Beras: " + jenis_beras[i]);
-            System.out.println("Kualitas: " + kualitas[i]);
-            System.out.println("Harga per kg: Rp" + harga_per_kg[i]);
-            System.out.println("Jumlah (kg): " + jumlah_kg[i]);
-            System.out.println("Total Harga: Rp" + total_harga[i]);
-            System.out.println();
+    public void printReceipt() {
+        System.out.print("\n");
+        System.out.format("+----+-------------+----------------+-------------+-------------+-------------+%n");
+        System.out.format("| Nota Pembelian " + tanggal + "      Agen Beras Haji Lulung   Kasir : " + nama_kasir
+                + "|\n");
+        System.out.format("+----+-------------+----------------+-------------+-------------+-------------+%n");
+        System.out.format("| No | Jenis Beras | Kualitas Beras | Jumlah (Kg) | Harga       | Total       |%n");
+        System.out.format("+----+-------------+----------------+-------------+-------------+-------------+%n");
+
+        String leftAlignFormat = "| %-2s | %-11s | %-14s | %-11s | %-11s | %-11s |%n";
+        for (int i = 0; i < jumlah_kg.length; i++) {
+            System.out.format(leftAlignFormat, (i + 1), jenis_beras[i], kualitas[i], jumlah_kg[i],
+                    "Rp " + harga_per_kg[i], "Rp " + total_harga[i]);
         }
-        System.out.println("Total Pendapatan: Rp" + totalPendapatan);
+        System.out.format("+----+-------------+----------------+-------------+-------------+-------------+%n");
+        double total_pendapatan = 0;
+        for (double total : total_harga) {
+            total_pendapatan += total;
+        }
+        System.out.println("Total Yang harus dibayar adalah : Rp " + total_pendapatan);
     }
 }
