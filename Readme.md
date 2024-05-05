@@ -2,6 +2,8 @@
 
 Aplikasi sederhana berbasis CLI yang dibuat dengan bahasa pemrograman Java, Program ini dibuat untuk memenuhi tugas UTS semester 2 mata kuliah pemrograman berbasis objek.
 
+![](https://raw.githubusercontent.com/laheluki/SiJaBer/master/output.png)
+
 ### 🙉 Pengembang
 
 - Muhamad Rifki Saputra (17230032)
