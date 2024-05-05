@@ -27,6 +27,20 @@ class Transaction {
     double[] harga_per_kg, total_harga;
     String tanggal;
 
+    private void discount() {
+        double total_pendapatan = 0;
+        for (double total : total_harga) {
+            total_pendapatan += total;
+        }
+        if (total_pendapatan > 100000) {
+            double diskon = 0.05 * total_pendapatan;
+            System.out.println("Anda mendapatkan diskon sebesar Rp " + diskon);
+            total_pendapatan -= diskon;
+            System.out.println("Total Yang harus dibayar adalah : Rp " + total_pendapatan);
+        }
+
+    }
+
     public void startTransaction() throws IOException {
         InputStreamReader keyReader = new InputStreamReader(System.in);
         BufferedReader input = new BufferedReader(keyReader);
@@ -121,10 +135,6 @@ class Transaction {
                     "Rp " + harga_per_kg[i], "Rp " + total_harga[i]);
         }
         System.out.format("+----+-------------+----------------+-------------+-------------+-------------+%n");
-        double total_pendapatan = 0;
-        for (double total : total_harga) {
-            total_pendapatan += total;
-        }
-        System.out.println("Total Yang harus dibayar adalah : Rp " + total_pendapatan);
+        discount();
     }
 }
