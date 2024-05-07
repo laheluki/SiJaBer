@@ -37,6 +37,9 @@ class Transaction {
             System.out.println("Anda mendapatkan diskon sebesar Rp " + diskon);
             total_pendapatan -= diskon;
             System.out.println("Total Yang harus dibayar adalah : Rp " + total_pendapatan);
+        } else {
+            System.out.println("Pembelian kurang dari Rp 100.000 tidak mendapat diskon");
+            System.out.println("Total Yang harus dibayar adalah : Rp " + total_pendapatan);
         }
 
     }
